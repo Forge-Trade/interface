@@ -1,21 +1,20 @@
 import { Currency, CurrencyAmount, Price, Token, TradeType } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
+import { SupportedChainId } from 'constants/chains'
 import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
 import { useMemo, useRef } from 'react'
 import { RouterPreference } from 'state/routing/slice'
 import { useRoutingAPITrade } from 'state/routing/useRoutingAPITrade'
 
-import { SupportedChainId } from '../constants/chains'
-import { CUSD_CELO, DAI_OPTIMISM, USDC_ARBITRUM, USDC_MAINNET, USDC_POLYGON } from '../constants/tokens'
+import { USDC_FUJI, USDC_TEVMOS } from '../constants/tokens'
 
 // Stablecoin amounts used when calculating spot price for a given currency.
 // The amount is large enough to filter low liquidity pairs.
 const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> } = {
-  [SupportedChainId.MAINNET]: CurrencyAmount.fromRawAmount(USDC_MAINNET, 100_000e6),
-  [SupportedChainId.ARBITRUM_ONE]: CurrencyAmount.fromRawAmount(USDC_ARBITRUM, 10_000e6),
-  [SupportedChainId.OPTIMISM]: CurrencyAmount.fromRawAmount(DAI_OPTIMISM, 10_000e18),
-  [SupportedChainId.POLYGON]: CurrencyAmount.fromRawAmount(USDC_POLYGON, 10_000e6),
-  [SupportedChainId.CELO]: CurrencyAmount.fromRawAmount(CUSD_CELO, 10_000e18),
+  // TODO: replace USDC fuji by mainnet
+  [SupportedChainId.MAINNET]: CurrencyAmount.fromRawAmount(USDC_FUJI, 100_000e6),
+  [SupportedChainId.FUJI]: CurrencyAmount.fromRawAmount(USDC_FUJI, 10_000e18),
+  [SupportedChainId.TESTNET]: CurrencyAmount.fromRawAmount(USDC_TEVMOS, 1_000e1),
 }
 
 /**
@@ -27,8 +26,7 @@ export default function useStablecoinPrice(currency?: Currency): Price<Currency,
 
   const amountOut = chainId ? STABLECOIN_AMOUNT_OUT[chainId] : undefined
   const stablecoin = amountOut?.currency
-
-  const { trade } = useRoutingAPITrade(TradeType.EXACT_OUTPUT, amountOut, currency, RouterPreference.PRICE)
+  const { trade } = useRoutingAPITrade(TradeType.EXACT_OUTPUT, amountOut, currency, RouterPreference.API)
   const price = useMemo(() => {
     if (!currency || !stablecoin) {
       return undefined

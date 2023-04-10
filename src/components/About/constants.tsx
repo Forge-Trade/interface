@@ -3,10 +3,13 @@ import { DollarSign, Terminal } from 'react-feather'
 import styled from 'styled-components/macro'
 import { lightTheme } from 'theme/colors'
 
-import darkArrowImgSrc from './images/aboutArrowDark.png'
+import Arrow from '../../pages/Landing/images/arrow.svg'
+import Bridge from '../../pages/Landing/images/bridge.svg'
+import Building from '../../pages/Landing/images/building.svg'
+import Code from '../../pages/Landing/images/code.svg'
+import Drop from '../../pages/Landing/images/droplet.svg'
+import People from '../../pages/Landing/images/people.svg'
 import lightArrowImgSrc from './images/aboutArrowLight.png'
-import darkDollarImgSrc from './images/aboutDollarDark.png'
-import darkTerminalImgSrc from './images/aboutTerminalDark.png'
 import nftCardImgSrc from './images/nftCard.png'
 import swapCardImgSrc from './images/swapCard.png'
 
@@ -14,17 +17,17 @@ export const MAIN_CARDS = [
   {
     to: '/swap',
     title: 'Swap tokens',
-    description: 'Buy, sell, and explore tokens on Ethereum, Polygon, Optimism, and more.',
+    description: 'Trade and explore EVM and Cosmos tokens.',
     cta: 'Trade Tokens',
     darkBackgroundImgSrc: swapCardImgSrc,
     lightBackgroundImgSrc: swapCardImgSrc,
     elementName: InterfaceElementName.ABOUT_PAGE_SWAP_CARD,
   },
   {
-    to: '/nfts',
-    title: 'Trade NFTs',
-    description: 'Buy and sell NFTs across marketplaces to find more listings at better prices.',
-    cta: 'Explore NFTs',
+    to: '/pool',
+    title: 'Fuel the Forge',
+    description: 'Provide liquidity to pools and earn fees on swaps.',
+    cta: 'Provide liquidity',
     darkBackgroundImgSrc: nftCardImgSrc,
     lightBackgroundImgSrc: nftCardImgSrc,
     elementName: InterfaceElementName.ABOUT_PAGE_NFTS_CARD,
@@ -40,32 +43,66 @@ const StyledCardLogo = styled.img`
 
 export const MORE_CARDS = [
   {
-    to: 'https://support.uniswap.org/hc/en-us/articles/11306574799117-How-to-use-Moon-Pay-on-the-Uniswap-web-app-',
+    to: 'https://satellite.money/?source=avalanche&destination=evmos&asset_denom=uusdc&destination_address=',
     external: true,
-    title: 'Buy crypto',
-    description: 'Buy crypto with your credit card or bank account at the best rates.',
+    title: 'Bridge',
+    description: 'Transfer assets to Evmos from EVM and Cosmos chains through Axelar Bridge',
     lightIcon: <DollarSign color={lightTheme.textTertiary} size={48} />,
-    darkIcon: <StyledCardLogo src={darkDollarImgSrc} alt="Earn" />,
-    cta: 'Buy now',
+    darkIcon: <img style={{ width: '42px', height: '42px' }} src={Bridge} />,
+    cta: 'Bridge assets',
     elementName: InterfaceElementName.ABOUT_PAGE_BUY_CRYPTO_CARD,
   },
   {
-    to: '/pool',
-    title: 'Earn',
-    description: 'Provide liquidity to pools on Uniswap and earn fees on swaps.',
-    lightIcon: <StyledCardLogo src={lightArrowImgSrc} alt="Analytics" />,
-    darkIcon: <StyledCardLogo src={darkArrowImgSrc} alt="Analytics" />,
-    cta: 'Provide liquidity',
-    elementName: InterfaceElementName.ABOUT_PAGE_EARN_CARD,
+    to: 'https://app.stride.zone/',
+    external: true,
+    title: 'Liquid stake',
+    description: 'Stake your Evmos to earn rewards while using staked token in DeFi',
+    lightIcon: <DollarSign color={lightTheme.textTertiary} size={48} />,
+    darkIcon: <img style={{ width: '42px', height: '42px' }} src={Drop} />,
+    cta: 'Liquid stake Evmos',
+    elementName: InterfaceElementName.ABOUT_PAGE_BUY_CRYPTO_CARD,
   },
+
   {
-    to: 'https://docs.uniswap.org',
+    to: 'https://app.evmos.org/governance',
+    external: true,
+    title: 'Governance',
+    description: 'Shape the future. Vote in Evmos governance and discuss upcoming blueprints',
+    lightIcon: <DollarSign color={lightTheme.textTertiary} size={48} />,
+    darkIcon: <img style={{ width: '42px', height: '42px' }} src={Building} />,
+    cta: 'Vote',
+    elementName: InterfaceElementName.ABOUT_PAGE_BUY_CRYPTO_CARD,
+  },
+
+  {
+    to: 'https://app.evmos.org/assets',
+    external: true,
+    title: 'IBC conversion',
+    description: 'Convert your IBC assets in and out of the Evmos EVM',
+    lightIcon: <Terminal color={lightTheme.textTertiary} size={48} />,
+    darkIcon: <img style={{ width: '42px', height: '42px' }} src={Arrow} />,
+    cta: 'Conversion page',
+    elementName: InterfaceElementName.ABOUT_PAGE_DEV_DOCS_CARD,
+  },
+
+  {
+    to: 'https://docs.evmos.org/',
     external: true,
     title: 'Build dApps',
-    description: 'Build apps and tools on the largest DeFi protocol on Ethereum.',
+    description: 'Learn of ways to contribute to the development of Forge',
     lightIcon: <Terminal color={lightTheme.textTertiary} size={48} />,
-    darkIcon: <StyledCardLogo src={darkTerminalImgSrc} alt="Developers" />,
+    darkIcon: <img style={{ width: '42px', height: '42px' }} src={Code} />,
     cta: 'Developer docs',
     elementName: InterfaceElementName.ABOUT_PAGE_DEV_DOCS_CARD,
+  },
+  {
+    to: 'https://t.me/forgeDEX',
+    external: true,
+    title: 'Community',
+    description: 'Join our thriving community and connect with like-minded people',
+    lightIcon: <StyledCardLogo src={lightArrowImgSrc} alt="Analytics" />,
+    darkIcon: <img style={{ width: '42px', height: '42px' }} src={People} />,
+    cta: 'Join us',
+    elementName: InterfaceElementName.ABOUT_PAGE_EARN_CARD,
   },
 ]

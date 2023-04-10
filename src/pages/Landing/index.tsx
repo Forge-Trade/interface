@@ -6,7 +6,6 @@ import Card, { CardType } from 'components/About/Card'
 import { MAIN_CARDS, MORE_CARDS } from 'components/About/constants'
 import ProtocolBanner from 'components/About/ProtocolBanner'
 import { BaseButton } from 'components/Button'
-import { useSwapWidgetEnabled } from 'featureFlags/flags/swapWidget'
 import Swap from 'pages/Swap'
 import { parse } from 'qs'
 import { useEffect, useRef, useState } from 'react'
@@ -19,6 +18,8 @@ import styled, { css } from 'styled-components/macro'
 import { BREAKPOINTS } from 'theme'
 import { Z_INDEX } from 'theme/zIndex'
 
+import headerBG from './images/forge-header.png'
+
 const PageContainer = styled.div<{ isDarkMode: boolean }>`
   position: absolute;
   top: 0;
@@ -29,11 +30,7 @@ const PageContainer = styled.div<{ isDarkMode: boolean }>`
   align-items: center;
   scroll-behavior: smooth;
   overflow-x: hidden;
-
-  background: ${({ isDarkMode }) =>
-    isDarkMode
-      ? 'linear-gradient(rgba(8, 10, 24, 0) 0%, rgb(8 10 24 / 100%) 45%)'
-      : 'linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255 255 255 /100%) 45%)'};
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7));
 `
 
 const Gradient = styled.div<{ isDarkMode: boolean }>`
@@ -41,19 +38,17 @@ const Gradient = styled.div<{ isDarkMode: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 0;
+  top: 72px;
   bottom: 0;
   width: 100%;
   min-height: 550px;
-  background: ${({ isDarkMode }) =>
-    isDarkMode
-      ? 'linear-gradient(rgba(8, 10, 24, 0) 0%, rgb(8 10 24 / 100%) 45%)'
-      : 'linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255 255 255 /100%) 45%)'};
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(0 0 0 / 88%) 45%);
   z-index: ${Z_INDEX.under_dropdown};
   pointer-events: none;
   height: ${({ theme }) => `calc(100vh - ${theme.mobileBottomBarHeight}px)`};
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.md}px) {
-    height: 100vh;
+    top: 72px;
+    height: calc(100vh - 72px);
   }
 `
 
@@ -62,7 +57,7 @@ const GlowContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 0;
+  top: 72px;
   bottom: 0;
   width: 100%;
   overflow-y: hidden;
@@ -75,8 +70,9 @@ const GlowContainer = styled.div`
 const Glow = styled.div`
   position: absolute;
   top: 68px;
+  opacity: 0.5;
   bottom: 0;
-  background: radial-gradient(72.04% 72.04% at 50% 3.99%, #ff37eb 0%, rgba(166, 151, 255, 0) 100%);
+  background: radial-gradient(72.04% 72.04% at 50% 3.99%, #ed4e33 0%, rgba(166, 151, 255, 0) 100%);
   filter: blur(72px);
   border-radius: 24px;
   max-width: 480px;
@@ -89,17 +85,22 @@ const ContentContainer = styled.div<{ isDarkMode: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   width: 100%;
   padding: 0 0 40px;
-  max-width: min(720px, 90%);
   min-height: 500px;
+  max-width: min(720px, 90%);
   z-index: ${Z_INDEX.under_dropdown};
   transition: ${({ theme }) => `${theme.transition.duration.medium} ${theme.transition.timing.ease} opacity`};
   height: ${({ theme }) => `calc(100vh - ${theme.navHeight + theme.mobileBottomBarHeight}px)`};
   pointer-events: none;
   * {
     pointer-events: auto;
+  }
+  @media screen and (min-width: ${BREAKPOINTS.xl}px) {
+    padding: 0 0 1rem;
+    justify-content: center;
+    top: 200px;
   }
 `
 
@@ -110,9 +111,10 @@ const TitleText = styled.h1<{ isDarkMode: boolean }>`
   font-weight: 700;
   text-align: center;
   margin: 0 0 24px;
+  text-transform: uppercase;
   background: ${({ isDarkMode }) =>
     isDarkMode
-      ? 'linear-gradient(20deg, rgba(255, 244, 207, 1) 10%, rgba(255, 87, 218, 1) 100%)'
+      ? 'linear-gradient(20deg, rgba(255, 244, 207, 1) 10%, rgba(237, 78, 51, 1) 80%)'
       : 'linear-gradient(10deg, rgba(255,79,184,1) 0%, rgba(255,159,251,1) 100%)'};
   background-clip: text;
   -webkit-background-clip: text;
@@ -123,13 +125,13 @@ const TitleText = styled.h1<{ isDarkMode: boolean }>`
   }
 
   @media screen and (min-width: ${BREAKPOINTS.md}px) {
-    font-size: 64px;
-    line-height: 72px;
+    font-size: 54px;
+    line-height: 62px;
   }
 `
 
-const SubText = styled.h3`
-  color: ${({ theme }) => theme.textSecondary};
+const SubText = styled.div`
+  color: #faf1e4;
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
@@ -154,13 +156,13 @@ const LandingButton = styled(BaseButton)`
 `
 
 const ButtonCTA = styled(LandingButton)`
-  background: linear-gradient(93.06deg, #ff00c7 2.66%, #ff9ffb 98.99%);
+  background: linear-gradient(93.06deg, #ed4e33 12.66%, #531c12 98.99%);
   border: none;
   color: ${({ theme }) => theme.white};
   transition: ${({ theme }) => `all ${theme.transition.duration.medium} ${theme.transition.timing.ease}`};
 
   &:hover {
-    box-shadow: 0px 0px 16px 0px #ff00c7;
+    box-shadow: 0px 0px 16px 0px #ed4e33;
   }
 `
 
@@ -183,7 +185,7 @@ const ActionsContainer = styled.span`
 
 const LearnMoreContainer = styled.div`
   align-items: center;
-  color: ${({ theme }) => theme.textTertiary};
+  color: #faf1e4;
   cursor: pointer;
   font-size: 20px;
   font-weight: 600;
@@ -213,11 +215,9 @@ const AboutContentContainer = styled.div<{ isDarkMode: boolean }>`
   align-items: center;
   padding: 0 24px 5rem;
   width: 100%;
-  background: ${({ isDarkMode }) =>
-    isDarkMode
-      ? 'linear-gradient(179.82deg, rgba(0, 0, 0, 0) 0.16%, #050026 99.85%)'
-      : 'linear-gradient(179.82deg, rgba(255, 255, 255, 0) 0.16%, #eaeaea 99.85%)'};
+  background: rgba(0, 0, 0, 0);
   @media screen and (min-width: ${BREAKPOINTS.md}px) {
+    margin-top: 40px;
     padding: 0 96px 5rem;
   }
 `
@@ -226,7 +226,7 @@ const CardGrid = styled.div<{ cols: number }>`
   display: grid;
   gap: 12px;
   width: 100%;
-  padding: 24px 0 0;
+  padding: 40px 0 0;
   max-width: 1440px;
   scroll-margin: ${({ theme }) => `${theme.navHeight}px 0 0`};
 
@@ -237,7 +237,7 @@ const CardGrid = styled.div<{ cols: number }>`
       Array.from(Array(cols === 2 ? 2 : 1))
         .map(() => '1fr')
         .join(' ')};
-    gap: 32px;
+    gap: 40px;
   }
 
   @media screen and (min-width: ${BREAKPOINTS.lg}px) {
@@ -246,7 +246,7 @@ const CardGrid = styled.div<{ cols: number }>`
       Array.from(Array(cols))
         .map(() => '1fr')
         .join(' ')};
-    gap: 32px;
+    gap: 40px;
   }
 `
 
@@ -256,14 +256,21 @@ const LandingSwapContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1;
+
+  @media screen and (min-width: ${BREAKPOINTS.md}px) {
+    z-index: 1;
+    background-image: url(${headerBG});
+    background-size: cover;
+    background-position: -200px center;
+    height: calc(100vh - 72px);
+  }
 `
 
 const SwapCss = css`
   * {
     pointer-events: none;
   }
-
+  transform: scale(0.95);
   &:hover {
     transform: translateY(-4px);
     transition: ${({ theme }) => `transform ${theme.transition.duration.medium} ${theme.transition.timing.ease}`};
@@ -287,11 +294,6 @@ const Link = styled(NativeLink)`
   ${LinkCss}
 `
 
-const WidgetLandingLink = styled(NativeLink)`
-  ${LinkCss}
-  ${SwapCss}
-`
-
 export default function Landing() {
   const isDarkMode = useIsDarkMode()
 
@@ -305,7 +307,7 @@ export default function Landing() {
     ignoreQueryPrefix: true,
   })
 
-  const swapWidgetEnabled = useSwapWidgetEnabled()
+  const swapWidgetEnabled = false
 
   // This can be simplified significantly once the flag is removed! For now being explicit is clearer.
   useEffect(() => {
@@ -327,12 +329,12 @@ export default function Landing() {
               element={InterfaceElementName.LANDING_PAGE_SWAP_ELEMENT}
             >
               {swapWidgetEnabled ? (
-                <WidgetLandingLink to="/swap">
-                  <Swap />
-                </WidgetLandingLink>
+                <Link to="/swap">
+                  <LandingSwap intro={true} />
+                </Link>
               ) : (
                 <Link to="/swap">
-                  <LandingSwap />
+                  <LandingSwap intro={true} />
                 </Link>
               )}
             </TraceEvent>
@@ -342,9 +344,9 @@ export default function Landing() {
             <Glow />
           </GlowContainer>
           <ContentContainer isDarkMode={isDarkMode}>
-            <TitleText isDarkMode={isDarkMode}>Trade crypto & NFTs with confidence</TitleText>
+            <TitleText isDarkMode={isDarkMode}>The strongest interchain exchange</TitleText>
             <SubTextContainer>
-              <SubText>Buy, sell, and explore tokens and NFTs</SubText>
+              <SubText>Swap, earn, and build on the premier Evmos community owned DEX</SubText>
             </SubTextContainer>
             <ActionsContainer>
               <TraceEvent
@@ -366,7 +368,7 @@ export default function Landing() {
               <LearnMoreArrow />
             </LearnMoreContainer>
           </ContentContainer>
-          <AboutContentContainer isDarkMode={isDarkMode}>
+          <AboutContentContainer isDarkMode={true}>
             <CardGrid cols={2} ref={cardsRef}>
               {MAIN_CARDS.map(({ darkBackgroundImgSrc, lightBackgroundImgSrc, ...card }) => (
                 <Card

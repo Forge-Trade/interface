@@ -1,22 +1,13 @@
 import { Trans } from '@lingui/macro'
-import { useWeb3React } from '@web3-react/core'
 import Web3Status from 'components/Web3Status'
-import { NftListV2Variant, useNftListV2Flag } from 'featureFlags/flags/nftListV2'
-import { chainIdToBackendName } from 'graphql/data/util'
 import { useIsNftPage } from 'hooks/useIsNftPage'
 import { Box } from 'nft/components/Box'
 import { Row } from 'nft/components/Flex'
-import { UniIcon } from 'nft/components/icons'
-import { useProfilePageState } from 'nft/hooks'
-import { ProfilePageStateType } from 'nft/types'
 import { ReactNode } from 'react'
 import { NavLink, NavLinkProps, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
-import { Bag } from './Bag'
 import { ChainSelector } from './ChainSelector'
-import { MenuDropdown } from './MenuDropdown'
-import { SearchBar } from './SearchBar'
 import * as styles from './style.css'
 
 const Nav = styled.nav`
@@ -50,39 +41,31 @@ const MenuItem = ({ href, dataTestId, id, isActive, children }: MenuItemProps) =
 
 export const PageTabs = () => {
   const { pathname } = useLocation()
-  const { chainId: connectedChainId } = useWeb3React()
-  const chainName = chainIdToBackendName(connectedChainId)
 
   const isPoolActive =
-    pathname.startsWith('/pool') ||
-    pathname.startsWith('/add') ||
-    pathname.startsWith('/remove') ||
-    pathname.startsWith('/increase')
-
-  const isNftPage = useIsNftPage()
+    (pathname.startsWith('/pool') ||
+      pathname.startsWith('/add') ||
+      pathname.startsWith('/remove') ||
+      pathname.startsWith('/increase')) &&
+    !pathname.startsWith('/pools')
 
   return (
-    <>
+    <div style={{ display: 'flex', gap: '10px' }}>
       <MenuItem href="/swap" isActive={pathname.startsWith('/swap')}>
         <Trans>Swap</Trans>
       </MenuItem>
-      <MenuItem href={`/tokens/${chainName.toLowerCase()}`} isActive={pathname.startsWith('/tokens')}>
-        <Trans>Tokens</Trans>
-      </MenuItem>
-      <MenuItem dataTestId="nft-nav" href="/nfts" isActive={isNftPage}>
-        <Trans>NFTs</Trans>
+      <MenuItem href="/pools" isActive={pathname.startsWith('/pools')}>
+        <Trans>Pools</Trans>
       </MenuItem>
       <MenuItem href="/pool" id="pool-nav-link" isActive={isPoolActive}>
-        <Trans>Pool</Trans>
+        <Trans>Add Liquidity</Trans>
       </MenuItem>
-    </>
+    </div>
   )
 }
 
 const Navbar = () => {
   const isNftPage = useIsNftPage()
-  const sellPageState = useProfilePageState((state) => state.state)
-  const isNftListV2 = useNftListV2Flag() === NftListV2Variant.Enabled
   const navigate = useNavigate()
 
   return (
@@ -91,17 +74,16 @@ const Navbar = () => {
         <Box display="flex" height="full" flexWrap="nowrap">
           <Box className={styles.leftSideContainer}>
             <Box className={styles.logoContainer}>
-              <UniIcon
-                width="48"
-                height="48"
-                data-testid="uniswap-logo"
-                className={styles.logo}
+              <img
                 onClick={() => {
                   navigate({
                     pathname: '/',
                     search: '?intro=true',
                   })
                 }}
+                className={styles.logo}
+                style={{ width: '48px', height: '48px' }}
+                src="/images/ForgeIcon.png"
               />
             </Box>
             {!isNftPage && (
@@ -113,18 +95,9 @@ const Navbar = () => {
               <PageTabs />
             </Row>
           </Box>
-          <Box className={styles.searchContainer}>
-            <SearchBar />
-          </Box>
+
           <Box className={styles.rightSideContainer}>
             <Row gap="12">
-              <Box position="relative" display={{ sm: 'flex', xl: 'none' }}>
-                <SearchBar />
-              </Box>
-              <Box display={{ sm: 'none', lg: 'flex' }}>
-                <MenuDropdown />
-              </Box>
-              {isNftPage && (!isNftListV2 || sellPageState !== ProfilePageStateType.LISTING) && <Bag />}
               {!isNftPage && (
                 <Box display={{ sm: 'none', lg: 'flex' }}>
                   <ChainSelector />

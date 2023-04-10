@@ -1,5 +1,5 @@
 import { Trade } from '@uniswap/router-sdk'
-import { Currency, Percent, TradeType } from '@uniswap/sdk-core'
+import { Currency, CurrencyAmount, Percent, TradeType } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import { usePermit2Enabled } from 'featureFlags/flags/permit2'
 import { PermitSignature } from 'hooks/usePermitAllowance'
@@ -18,17 +18,17 @@ import { useUniversalRouterSwapCallback } from './useUniversalRouter'
 // and the user has approved the slippage adjusted input amount for the trade
 export function useSwapCallback(
   trade: Trade<Currency, Currency, TradeType> | undefined, // trade to execute, required
+  fiatValues: { amountIn: CurrencyAmount<Currency> | null; amountOut: CurrencyAmount<Currency> | null }, // usd values for amount in and out, logged for analytics
   allowedSlippage: Percent, // in bips
-  recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
-  signatureData: SignatureData | undefined | null,
-  permitSignature: PermitSignature | undefined
+  permitSignature: PermitSignature | undefined,
+  recipientAddressOrName: string | null,
+  signatureData: SignatureData | undefined | null
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: ReactNode | null } {
   const { account } = useWeb3React()
 
   const deadline = useTransactionDeadline()
 
   const addTransaction = useTransactionAdder()
-
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
 
@@ -44,7 +44,8 @@ export function useSwapCallback(
     signatureData,
     deadline,
   })
-  const universalRouterSwapCallback = useUniversalRouterSwapCallback(permit2Enabled ? trade : undefined, {
+
+  const universalRouterSwapCallback = useUniversalRouterSwapCallback(permit2Enabled ? trade : undefined, fiatValues, {
     slippageTolerance: allowedSlippage,
     deadline,
     permit: permitSignature,

@@ -1,6 +1,6 @@
+import { IMetric, MetricLoggerUnit, setGlobalMetric } from '@orbitalapes/smart-order-router'
 import { skipToken } from '@reduxjs/toolkit/query/react'
 import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
-import { IMetric, MetricLoggerUnit, setGlobalMetric } from '@uniswap/smart-order-router'
 import { sendTiming } from 'components/analytics'
 import { AVERAGE_L1_BLOCK_TIME } from 'constants/chainInfo'
 import { useStablecoinAmountFromFiatValue } from 'hooks/useStablecoinPrice'
@@ -48,7 +48,6 @@ export function useRoutingAPITrade<TTradeType extends TradeType>(
     // Price-fetching is informational and costly, so it's done less frequently.
     pollingInterval: routerPreference === RouterPreference.PRICE ? ms`2m` : AVERAGE_L1_BLOCK_TIME,
   })
-
   const quoteResult: GetQuoteResult | undefined = useIsValidBlock(Number(data?.blockNumber) || 0) ? data : undefined
 
   const route = useMemo(

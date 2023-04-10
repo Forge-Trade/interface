@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
-import { SupportedChainId } from '@uniswap/sdk-core'
 import { getChainInfo } from 'constants/chainInfo'
+import { SupportedChainId } from 'constants/chains'
 import { darken } from 'polished'
 import { useState } from 'react'
 import styled from 'styled-components/macro'
@@ -105,7 +105,7 @@ export function AboutSection({ address, chainId, description, homepageUrl, twitt
       </ThemedText.SubHeaderSmall>
       <ResourcesContainer data-cy="resources-container">
         <Resource
-          name={chainId === SupportedChainId.MAINNET ? 'Etherscan' : 'Block Explorer'}
+          name={chainId === SupportedChainId.MAINNET ? 'Block Explorer' : 'Block Explorer'}
           link={`${baseExplorerUrl}${address === 'NATIVE' ? '' : 'address/' + address}`}
         />
         <Resource name="More analytics" link={`https://info.uniswap.org/#/tokens/${address}`} />

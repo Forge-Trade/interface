@@ -4,23 +4,10 @@ import { ReactNode } from 'react'
 import { AlertTriangle } from 'react-feather'
 import { Text } from 'rebass'
 import styled, { css } from 'styled-components/macro'
+import { BREAKPOINTS } from 'theme'
 import { Z_INDEX } from 'theme/zIndex'
 
 import { AutoColumn } from '../Column'
-
-export const PageWrapper = styled.div`
-  padding: 68px 8px 0px;
-  max-width: 480px;
-  width: 100%;
-
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
-    padding-top: 48px;
-  }
-
-  @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.sm}px`}) {
-    padding-top: 20px;
-  }
-`
 
 // Mostly copied from `AppBody` but it was getting too hard to maintain backwards compatibility.
 export const SwapWrapper = styled.main`
@@ -34,6 +21,33 @@ export const SwapWrapper = styled.main`
 
   &:hover {
     border: 1px solid ${({ theme }) => theme.backgroundOutline};
+  }
+`
+
+export const SwapPageWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+  padding: 68px 12px 0px;
+  flex-direction: column;
+  align-items: center;
+
+  @media screen and (min-width: ${BREAKPOINTS.lg}px) {
+    flex-direction: row;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+`
+
+export const TokenInfoWrapper = styled.div<{ show: boolean }>`
+  display: none;
+  flex-direction: column;
+  width: '100%';
+  max-width: 600;
+
+  @media screen and (min-width: ${BREAKPOINTS.lg}px) {
+    display: ${({ show }) => (show ? 'flex' : 'none')};
   }
 `
 

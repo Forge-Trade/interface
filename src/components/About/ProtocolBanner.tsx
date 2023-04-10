@@ -1,11 +1,6 @@
-import { ButtonEmpty } from 'components/Button'
 import { useIsDarkMode } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { BREAKPOINTS } from 'theme'
-
-import meshSrc from './images/Mesh.png'
-
-const DARK_MODE_GRADIENT = 'radial-gradient(101.8% 4091.31% at 0% 0%, #4673FA 0%, #9646FA 100%)'
 
 const Banner = styled.div<{ isDarkMode: boolean }>`
   height: 340px;
@@ -22,10 +17,8 @@ const Banner = styled.div<{ isDarkMode: boolean }>`
 
   box-shadow: 0px 10px 24px rgba(51, 53, 72, 0.04);
 
-  background: ${({ isDarkMode }) =>
-    isDarkMode
-      ? `url(${meshSrc}), ${DARK_MODE_GRADIENT}`
-      : `url(${meshSrc}), linear-gradient(93.06deg, #FF00C7 2.66%, #FF9FFB 98.99%);`};
+  background: #121211;
+  border: 1px;
 
   @media screen and (min-width: ${BREAKPOINTS.lg}px) {
     height: 140px;
@@ -41,6 +34,7 @@ const TextContainer = styled.div`
 `
 
 const HeaderText = styled.div`
+  color: white;
   font-weight: 700;
   font-size: 28px;
   line-height: 36px;
@@ -56,49 +50,21 @@ const DescriptionText = styled.div`
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
+  color: #ed4e33;
 
   @media screen and (min-width: ${BREAKPOINTS.xl}px) {
     font-size: 20px;
     line-height: 28px;
   }
 `
-
-const BannerButtonContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-  transition: ${({ theme }) => `${theme.transition.duration.medium} ${theme.transition.timing.ease} opacity`};
-
-  &:hover {
-    opacity: 0.6;
-  }
-
-  @media screen and (min-width: ${BREAKPOINTS.lg}px) {
-    width: auto;
-  }
-`
-
-const BannerButton = styled(ButtonEmpty)`
-  color: white;
-  border: 1px solid white;
-`
-
 const ProtocolBanner = () => {
   const isDarkMode = useIsDarkMode()
   return (
     <Banner isDarkMode={isDarkMode}>
       <TextContainer>
-        <HeaderText>Powered by the Uniswap Protocol</HeaderText>
-        <DescriptionText>
-          The leading decentralized crypto trading protocol, governed by a global community.
-        </DescriptionText>
+        <HeaderText color="#ed4e33">Powered by OrbitalApes and the Evmos DAO.</HeaderText>
+        <DescriptionText>Community funded. No protocol fees.</DescriptionText>
       </TextContainer>
-      <BannerButtonContainer>
-        <BannerButton width="200px" as="a" href="https://uniswap.org" rel="noopener noreferrer" target="_blank">
-          Learn more
-        </BannerButton>
-      </BannerButtonContainer>
     </Banner>
   )
 }

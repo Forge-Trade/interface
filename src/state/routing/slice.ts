@@ -1,6 +1,6 @@
+import { AlphaRouter, ChainId } from '@orbitalapes/smart-order-router'
 import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 import { Protocol } from '@uniswap/router-sdk'
-import { AlphaRouter, ChainId } from '@uniswap/smart-order-router'
 import { RPC_PROVIDERS } from 'constants/providers'
 import { getClientSideQuote, toSupportedChainId } from 'lib/hooks/routing/clientSideSmartOrderRouter'
 import ms from 'ms.macro'
@@ -67,7 +67,7 @@ const PRICE_PARAMS = {
 export const routingApi = createApi({
   reducerPath: 'routingApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.uniswap.org/v1/',
+    baseUrl: 'https://21x5w4o8d6.execute-api.us-east-1.amazonaws.com/prod/',
   }),
   endpoints: (build) => ({
     getQuote: build.query<

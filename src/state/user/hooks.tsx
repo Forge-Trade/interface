@@ -5,19 +5,17 @@ import { L2_CHAIN_IDS } from 'constants/chains'
 import { SupportedLocale } from 'constants/locales'
 import { L2_DEADLINE_FROM_NOW } from 'constants/misc'
 import JSBI from 'jsbi'
-import { useCallback, useMemo } from 'react'
-import { shallowEqual } from 'react-redux'
+import { useCallback, useMemo, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { UserAddedToken } from 'types/tokens'
 
 import { V2_FACTORY_ADDRESSES } from '../../constants/addresses'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens } from '../../hooks/Tokens'
-import { AppState } from '../index'
+import { AppState } from '../types'
 import {
   addSerializedPair,
   addSerializedToken,
-  updateFiatOnrampAcknowledgments,
   updateHideClosedPositions,
   updateUserClientSideRouter,
   updateUserDarkMode,
@@ -49,15 +47,7 @@ function deserializeToken(serializedToken: SerializedToken, Class: typeof Token 
 }
 
 export function useIsDarkMode(): boolean {
-  const { userDarkMode, matchesDarkMode } = useAppSelector(
-    ({ user: { matchesDarkMode, userDarkMode } }) => ({
-      userDarkMode,
-      matchesDarkMode,
-    }),
-    shallowEqual
-  )
-
-  return userDarkMode === null ? matchesDarkMode : userDarkMode
+  return true
 }
 
 export function useDarkModeManager(): [boolean, () => void] {
@@ -104,24 +94,42 @@ export function useExpertModeManager(): [boolean, () => void] {
   return [expertMode, toggleSetExpertMode]
 }
 
-interface FiatOnrampAcknowledgements {
-  renderCount: number
-  system: boolean
-  user: boolean
-}
-export function useFiatOnrampAck(): [
-  FiatOnrampAcknowledgements,
-  (acknowledgements: Partial<FiatOnrampAcknowledgements>) => void
-] {
-  const dispatch = useAppDispatch()
-  const fiatOnrampAcknowledgments = useAppSelector((state) => state.user.fiatOnrampAcknowledgments)
-  const setAcknowledgements = useCallback(
-    (acks: Partial<FiatOnrampAcknowledgements>) => {
-      dispatch(updateFiatOnrampAcknowledgments(acks))
-    },
-    [dispatch]
-  )
-  return [fiatOnrampAcknowledgments, setAcknowledgements]
+export function useGraphManager() {
+  const key = 'show-price-graph'
+  const [storedValue, setStoredValue] = useState<any>({})
+
+  const showGraph = () => {
+    if (storedValue[key]) {
+      return storedValue[key]
+    }
+    if (typeof window === 'undefined') {
+      return 'true'
+    }
+    try {
+      const item = window.localStorage.getItem(key)
+      if (item === null) {
+        return 'true'
+      }
+      return item
+    } catch (error) {
+      return null
+    }
+  }
+
+  const setShowGraph = (value: any) => {
+    try {
+      const valueToStore = value instanceof Function ? value(storedValue) : value
+      setStoredValue(valueToStore)
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore))
+        setStoredValue({ ...storedValue, key: value })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return { showGraph, setShowGraph }
 }
 
 export function useClientSideRouter(): [boolean, (userClientSideRouter: boolean) => void] {

@@ -64,7 +64,6 @@ const baseMenuItem = style([
     borderRadius: '12',
     transition: '250',
     height: 'min',
-    width: 'full',
     textAlign: 'center',
   }),
   {
@@ -79,14 +78,14 @@ const baseMenuItem = style([
 export const menuItem = style([
   baseMenuItem,
   sprinkles({
-    color: 'textSecondary',
+    color: 'white',
   }),
 ])
 
 export const activeMenuItem = style([
   baseMenuItem,
   sprinkles({
-    color: 'textPrimary',
+    color: 'white',
     background: 'backgroundFloating',
   }),
 ])
