@@ -6,7 +6,10 @@ export interface EthereumProvider {
 
 declare global {
   interface Window {
-    ethereum?: EthereumProvider;
     Cypher?: any 
+    ethereum?: EthereumProvider
+    keplr?: any
+    getOfflineSigner?: any
+
   }
 }

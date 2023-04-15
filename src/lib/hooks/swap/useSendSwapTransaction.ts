@@ -6,6 +6,7 @@ import { sendAnalyticsEvent } from '@uniswap/analytics'
 import { SwapEventName } from '@uniswap/analytics-events'
 import { Trade } from '@uniswap/router-sdk'
 import { Currency, TradeType } from '@uniswap/sdk-core'
+import { convertToKeplrTx, enableKeplr, isKeplrWallet, signKeplrTx } from 'connection/utils'
 import { formatSwapSignedAnalyticsEventProperties } from 'lib/utils/analytics'
 import { useMemo } from 'react'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
@@ -107,6 +108,54 @@ export default function useSendSwapTransaction(
         const {
           call: { address, calldata, value },
         } = bestCallOption
+
+        let signedTx: any
+        console.log('hello')
+        if (isKeplrWallet()) {
+          await enableKeplr()
+          const pretx = {
+            from: account,
+            to: address,
+            data: calldata,
+            ...(value && !isZero(value) ? { value } : {}),
+          }
+          const tx = await convertToKeplrTx(provider, account, pretx)
+          signedTx = await signKeplrTx(tx)
+          return provider
+            .sendTransaction(signedTx)
+            .then((response) => {
+              sendAnalyticsEvent(
+                SwapEventName.SWAP_SIGNED,
+                formatSwapSignedAnalyticsEventProperties({
+                  trade,
+                  txHash: response.hash,
+                  fiatValues: { amountIn: null, amountOut: null },
+                })
+              )
+              if (calldata !== response.data) {
+                sendAnalyticsEvent(SwapEventName.SWAP_MODIFIED_IN_WALLET, { txHash: response.hash })
+                throw new InvalidSwapError(
+                  t`Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds.`
+                )
+              }
+              return response
+            })
+            .catch((error) => {
+              // if the user rejected the tx, pass this along
+              if (error?.code === 4001) {
+                throw new Error(t`Transaction rejected`)
+              } else {
+                // otherwise, the error was unexpected and we need to convey that
+                console.error(`Swap failed`, error, address, calldata, value)
+
+                if (error instanceof InvalidSwapError) {
+                  throw error
+                } else {
+                  throw new Error(t`Swap failed: ${swapErrorToUserReadableMessage(error)}`)
+                }
+              }
+            })
+        }
 
         return provider
           .getSigner()
