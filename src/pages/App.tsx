@@ -5,7 +5,7 @@ import TopLevelModals from 'components/TopLevelModals'
 import { useFeatureFlagsIsLoaded } from 'featureFlags'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import React, { Suspense, useEffect, useState } from 'react'
-import { Navigate, Route, Switch, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useIsDarkMode } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { flexRowNoWrap } from 'theme/styles'
@@ -158,38 +158,38 @@ export default function App() {
           <TopLevelModals />
           <Suspense fallback={<Loader />}>
             {isLoaded ? (
-              <Switch>
+              <Routes>
                 <Route path="/" element={<Landing />} />
 
-                <Route path="swap" element={<Swap />} />
+                <Route path="/swap" element={<Swap />} />
 
-                <Route path="pools" element={<Pools />} />
+                <Route path="/pools" element={<Pools />} />
 
-                <Route path="pool" element={<Pool />} />
-                <Route path="pool/:tokenId" element={<PositionPage />} />
+                <Route path="/pool" element={<Pool />} />
+                <Route path="/pool/:tokenId" element={<PositionPage />} />
 
-                <Route path="add" element={<RedirectDuplicateTokenIds />}>
+                <Route path="/add" element={<RedirectDuplicateTokenIds />}>
                   {/* this is workaround since react-router-dom v6 doesn't support optional parameters any more */}
                   <Route path=":currencyIdA" />
                   <Route path=":currencyIdA/:currencyIdB" />
                   <Route path=":currencyIdA/:currencyIdB/:feeAmount" />
                 </Route>
 
-                <Route path="increase" element={<AddLiquidity />}>
+                <Route path="/increase" element={<AddLiquidity />}>
                   <Route path=":currencyIdA" />
                   <Route path=":currencyIdA/:currencyIdB" />
                   <Route path=":currencyIdA/:currencyIdB/:feeAmount" />
                   <Route path=":currencyIdA/:currencyIdB/:feeAmount/:tokenId" />
                 </Route>
 
-                <Route path="remove/:tokenId" element={<RemoveLiquidityV3 />} />
+                <Route path="/remove/:tokenId" element={<RemoveLiquidityV3 />} />
 
-                <Route path="migrate/v2" element={<MigrateV2 />} />
-                <Route path="migrate/v2/:address" element={<MigrateV2Pair />} />
+                <Route path="/migrate/v2" element={<MigrateV2 />} />
+                <Route path="/migrate/v2/:address" element={<MigrateV2Pair />} />
 
                 <Route path="*" element={<Navigate to="/not-found" replace />} />
                 <Route path="/not-found" element={<NotFound />} />
-              </Switch>
+              </Routes>
             ) : (
               <Loader />
             )}
