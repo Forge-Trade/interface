@@ -5,7 +5,7 @@ import TopLevelModals from 'components/TopLevelModals'
 import { useFeatureFlagsIsLoaded } from 'featureFlags'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import React, { Suspense, useEffect, useState } from 'react'
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Switch, useLocation } from 'react-router-dom'
 import { useIsDarkMode } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { flexRowNoWrap } from 'theme/styles'
@@ -158,7 +158,7 @@ export default function App() {
           <TopLevelModals />
           <Suspense fallback={<Loader />}>
             {isLoaded ? (
-              <Routes>
+              <Switch>
                 <Route path="/" element={<Landing />} />
 
                 <Route path="swap" element={<Swap />} />
@@ -189,7 +189,7 @@ export default function App() {
 
                 <Route path="*" element={<Navigate to="/not-found" replace />} />
                 <Route path="/not-found" element={<NotFound />} />
-              </Routes>
+              </Switch>
             ) : (
               <Loader />
             )}
