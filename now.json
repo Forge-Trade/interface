@@ -1,10 +1,8 @@
 {
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/assets(.*)",
-      "destination": "https://evmos-apps-assets.vercel.app/assets/",
-      "permanent": true,
-      "statusCode": 308
+      "source": "/assets",
+      "destination": "https://evmos-apps-assets.vercel.app/assets"
     }
   ]
 }
