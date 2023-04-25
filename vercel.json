@@ -1,9 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/assets",
-      "destination": "https://evmos-apps-assets.vercel.app/assets"
+      "source": "/assets/",
+      "destination": "https://evmos-apps-assets.vercel.app/assets/"
     }
   ]
 }
-
