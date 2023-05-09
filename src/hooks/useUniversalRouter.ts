@@ -8,6 +8,7 @@ import { Currency, CurrencyAmount, Percent, TradeType } from '@uniswap/sdk-core'
 import { SwapRouter, UNIVERSAL_ROUTER_ADDRESS } from '@uniswap/universal-router-sdk'
 import { FeeOptions, toHex } from '@uniswap/v3-sdk'
 import { useWeb3React } from '@web3-react/core'
+import { convertToKeplrTx, enableKeplr, isKeplrWallet, signKeplrTx } from 'connection/utils'
 import { formatSwapSignedAnalyticsEventProperties } from 'lib/utils/analytics'
 import { useCallback } from 'react'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
@@ -52,7 +53,6 @@ export function useUniversalRouterSwapCallback(
         // TODO: universal-router-sdk returns a non-hexlified value.
         ...(value && !isZero(value) ? { value: toHex(value) } : {}),
       }
-
       let gasEstimate: BigNumber
       try {
         gasEstimate = await provider.estimateGas(tx)
@@ -61,23 +61,54 @@ export function useUniversalRouterSwapCallback(
         throw new Error('Your swap is expected to fail')
       }
       const gasLimit = calculateGasMargin(gasEstimate)
-      const response = await provider
-        .getSigner()
-        .sendTransaction({ ...tx, gasLimit })
-        .then((response) => {
-          sendAnalyticsEvent(
-            SwapEventName.SWAP_SIGNED,
-            formatSwapSignedAnalyticsEventProperties({ trade, fiatValues, txHash: response.hash })
-          )
-          if (tx.data !== response.data) {
-            sendAnalyticsEvent(SwapEventName.SWAP_MODIFIED_IN_WALLET, { txHash: response.hash })
-            throw new InvalidSwapError(
-              t`Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds.`
+
+      let signedTx: any
+      if (isKeplrWallet()) {
+        await enableKeplr()
+        const pretx = {
+          from: account,
+          to: UNIVERSAL_ROUTER_ADDRESS(chainId),
+          data,
+          ...(value && !isZero(value) ? { value: toHex(value) } : {}),
+        }
+        const tx = await convertToKeplrTx(provider, account, pretx)
+        signedTx = await signKeplrTx(tx)
+        const response = await provider
+          .getSigner()
+          .sendTransaction({ ...tx, gasLimit })
+          .then((response) => {
+            sendAnalyticsEvent(
+              SwapEventName.SWAP_SIGNED,
+              formatSwapSignedAnalyticsEventProperties({ trade, fiatValues, txHash: response.hash })
             )
-          }
-          return response
-        })
-      return response
+            if (tx.data !== response.data) {
+              sendAnalyticsEvent(SwapEventName.SWAP_MODIFIED_IN_WALLET, { txHash: response.hash })
+              throw new InvalidSwapError(
+                t`Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds.`
+              )
+            }
+            return response
+          })
+        return response
+      } else {
+        const response = await provider
+          .getSigner()
+          .sendTransaction({ ...tx, gasLimit })
+          .then((response) => {
+            sendAnalyticsEvent(
+              SwapEventName.SWAP_SIGNED,
+              formatSwapSignedAnalyticsEventProperties({ trade, fiatValues, txHash: response.hash })
+            )
+            if (tx.data !== response.data) {
+              sendAnalyticsEvent(SwapEventName.SWAP_MODIFIED_IN_WALLET, { txHash: response.hash })
+              throw new InvalidSwapError(
+                t`Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds.`
+              )
+            }
+            return response
+          })
+        return response
+      }
     } catch (swapError: unknown) {
       if (swapError instanceof InvalidSwapError) throw swapError
       throw new Error(swapErrorToUserReadableMessage(swapError))

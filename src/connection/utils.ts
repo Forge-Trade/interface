@@ -9,7 +9,6 @@ import {
   networkConnection,
   walletConnectConnection,
 } from 'connection'
-import { accounts } from 'index'
 
 interface KeplrInfo {
   chainId: number
@@ -69,8 +68,8 @@ export async function signKeplrTx(tx: any): Promise<any> {
   return signedTx
 }
 
-export function useKeplr(): KeplrInfo {
-  const account = evmosToEth(accounts[0].address)
+export async function useKeplr(): Promise<KeplrInfo> {
+  const account = await getKeplrAccount()
   const chainId = 9001
   const nodeUrl = 'https://eth.bd.evmos.org:8545'
   const provider = new JsonRpcProvider(nodeUrl)
