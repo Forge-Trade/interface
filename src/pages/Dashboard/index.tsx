@@ -112,7 +112,7 @@ const Dashboard = () => {
         <EmbedContainer>
           <StyledIframe
             title="ForgeDashboard"
-            src="https://forge-info.netlify.app/"
+            src="https://info.forge.trade/"
             className={embed}
             frameBorder={0}
             height="100%"

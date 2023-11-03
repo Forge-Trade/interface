@@ -4,13 +4,6 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "/frame/*"
-  to = "https://forge-info.netlify.app/"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}
-
 [[plugins]]
   package = "netlify-plugin-image-optim"
 
