@@ -1,7 +1,8 @@
 /* eslint-disable import/no-unused-modules */
 /* eslint-disable react/prop-types */
 import { Trans } from '@lingui/macro'
-import { TokenPrice } from 'components/Tokens/TokenDetails/PriceChart'
+import { PriceChart, TokenPrice } from 'components/Tokens/TokenDetails/PriceChart'
+import { TimePeriod } from 'graphql/data/util'
 import { createChart } from 'lightweight-charts'
 import { useEffect, useRef } from 'react'
 import styled, { useTheme } from 'styled-components/macro'
@@ -99,10 +100,6 @@ export default function ChartComponent({ tokenPriceQuery = [] }) {
         {data && data.length > 0 ? (
           <>
             <TokenPrice>{formatDollar({ num: headerData, isPrice: true })}</TokenPrice>
-            {/* <DeltaContainer>
-              {formattedDelta}
-              <ArrowCell>{arrow}</ArrowCell>
-            </DeltaContainer> */}
           </>
         ) : (
           <>
@@ -111,6 +108,8 @@ export default function ChartComponent({ tokenPriceQuery = [] }) {
           </>
         )}
       </ChartHeader>
+      <PriceChart width={550} height={350} prices={tokenPriceQuery} timePeriod={TimePeriod.WEEK}></PriceChart>
+
       <div ref={chartContainerRef} />
     </div>
   )

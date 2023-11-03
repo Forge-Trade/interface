@@ -18,6 +18,7 @@ import { NetworkAlert } from 'components/NetworkAlert/NetworkAlert'
 import PriceImpactWarning from 'components/swap/PriceImpactWarning'
 import SwapDetailsDropdown from 'components/swap/SwapDetailsDropdown'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
+import { PriceChart } from 'components/Tokens/TokenDetails/PriceChart'
 import { TokenInfoContainer, TokenNameCell } from 'components/Tokens/TokenDetails/Skeleton'
 import TokenSafetyModal from 'components/TokenSafety/TokenSafetyModal'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -85,8 +86,8 @@ import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { computeRealizedPriceImpact, warningSeverity } from '../../utils/prices'
 import { supportedChainId } from '../../utils/supportedChainId'
 import { useTokenPrice } from './chart'
+import { useTokenPrices } from './chartQuery'
 import { getQueryToken } from './helpers'
-import ChartComponent from './lighweightchart.js'
 
 const ArrowContainer = styled.div`
   display: inline-block;
@@ -585,6 +586,13 @@ export default function Swap({ className, intro }: { className?: string; intro?:
   const priceQueryAddress = displayToken ? (displayToken?.wrapped ? displayToken?.wrapped?.address : '') : ''
   const { data: tokenPriceQuery } = useTokenPrice(priceQueryAddress)
 
+  // const { data: poolInfo } = usePoolInfo(poolAddr)
+  const tokenPrices = useTokenPrices(
+    currencies[Field.INPUT]?.wrapped?.address ?? '0x15C3Eb3B621d1Bff62CbA1c9536B7c1AE9149b57',
+    currencies[Field.OUTPUT]?.wrapped?.address ?? '0xD4949664cD82660AaE99bEdc034a0deA8A0bd517',
+    Number(3600)
+  )
+  console.log(tokenPrices)
   const approveTokenButtonDisabled =
     approvalState !== ApprovalState.NOT_APPROVED || approvalSubmitted || signatureState === UseERC20PermitState.SIGNED
 
@@ -618,7 +626,7 @@ export default function Swap({ className, intro }: { className?: string; intro?:
                   <TokenSymbol>{infoToken?.symbol ?? <Trans>Symbol not found</Trans>}</TokenSymbol>
                 </TokenNameCell>
               </TokenInfoContainer>
-              <ChartComponent tokenPriceQuery={tokenPriceQuery} />
+              <PriceChart width={550} height={350} prices={tokenPriceQuery} timePeriod={TimePeriod.WEEK}></PriceChart>
             </TokenInfoWrapper>
           )}
 
