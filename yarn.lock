@@ -2159,6 +2159,34 @@
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.1.tgz#058d8a02354f3c78e369d452c15d33557ec1b705"
   integrity sha512-mvtOvXNNVLlF1p/UbLgLrmz2RCOl6Ow+TqyiK10SosoLKX7edsXYiHFHb7XIZdjII6F2sJVPPsJXWhBnbXT2DQ==
 
+"@forge-trade/smart-order-router@^3.5.8":
+  version "3.5.8"
+  resolved "https://registry.yarnpkg.com/@forge-trade/smart-order-router/-/smart-order-router-3.5.8.tgz#c2a227f2772d44cec133ca9d72206a238e320079"
+  integrity sha512-ci0Rbj7sOqcOUStUlIPPa8y52s3zc4PuR3ytE6VQ3Ww8MEPdih1qAnxXx/73k7XEaMZE43igmptJ6ChRXGRmIA==
+  dependencies:
+    "@orbitalapes/smart-order-router" "^3.5.0"
+    "@uniswap/default-token-list" "^2.0.0"
+    "@uniswap/permit2-sdk" "^1.2.0"
+    "@uniswap/router-sdk" "^1.3.0"
+    "@uniswap/swap-router-contracts" "^1.3.0"
+    "@uniswap/token-lists" "^1.0.0-beta.25"
+    "@uniswap/universal-router" "^1.0.1"
+    "@uniswap/universal-router-sdk" "^1.3.0"
+    "@uniswap/v2-sdk" "^3.0.1"
+    "@uniswap/v3-sdk" "^3.7.0"
+    async-retry "^1.3.1"
+    await-timeout "^1.1.1"
+    axios "^0.21.1"
+    bunyan "^1.8.15"
+    bunyan-blackhole "^1.1.1"
+    ethers "^5.7.2"
+    graphql "^15.5.0"
+    graphql-request "^3.4.0"
+    lodash "^4.17.21"
+    mnemonist "^0.38.3"
+    node-cache "^5.1.2"
+    stats-lite "^2.2.0"
+
 "@graphql-codegen/add@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/add/-/add-3.2.1.tgz#f1109f36f194f88a6abcc51703abee43ebbb50a2"
@@ -3391,7 +3419,7 @@
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.7.0.tgz#3092d70ea60e3d1835466266b1d68ad47035a2d5"
   integrity sha512-52Qb+A1DdOss8QvJrijYYPSf32GUg2pGaG/yCxtaA3cu4jduouTdg4XZSMLW9op54m1jH7J8hoajhHKOPsoJFw==
 
-"@orbitalapes/smart-order-router@^3.5.0", "@orbitalapes/smart-order-router@^3.5.5":
+"@orbitalapes/smart-order-router@^3.5.0":
   version "3.5.5"
   resolved "https://registry.yarnpkg.com/@orbitalapes/smart-order-router/-/smart-order-router-3.5.5.tgz#05168e766f9ca47f86a331e9921ae1c81d5ad21b"
   integrity sha512-y53ZisuuB9y4l1Gqidug+YsJKEMEhZ0Wtk9GuL8BuJ0eQWrhcaddXPvrm9ZgM1Bh7TYjZmI5/0CymXiKtNpDQQ==

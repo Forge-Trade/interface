@@ -1,4 +1,4 @@
-import { IMetric, MetricLoggerUnit, setGlobalMetric } from '@orbitalapes/smart-order-router'
+import { IMetric, MetricLoggerUnit, setGlobalMetric } from '@forge-trade/smart-order-router'
 import { skipToken } from '@reduxjs/toolkit/query/react'
 import { Currency, CurrencyAmount, TradeType } from '@uniswap/sdk-core'
 import { sendTiming } from 'components/analytics'

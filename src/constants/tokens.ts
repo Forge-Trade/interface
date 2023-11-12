@@ -29,7 +29,7 @@ export const USDC_NOBLE_EVMOS = new Token(
 export const USDT_EVMOS = new Token(
   SupportedChainId.MAINNET,
   '0xB8f812B5943ab3BF941D5D4F1de90A4b326c5d8f',
-  18,
+  6,
   'USDT',
   'USDT Kava'
 )
