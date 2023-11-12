@@ -2,7 +2,16 @@
 import { Currency, Token } from '@uniswap/sdk-core'
 import { SupportedChainId } from 'constants/chains'
 
-import { nativeOnChain, STATOM, STEVMOS, USDC_EVMOS, USDT_EVMOS, WETH_EVMOS, WRAPPED_NATIVE_CURRENCY } from './tokens'
+import {
+  nativeOnChain,
+  STATOM,
+  STEVMOS,
+  USDC_EVMOS,
+  USDC_NOBLE_EVMOS,
+  USDT_EVMOS,
+  WETH_EVMOS,
+  WRAPPED_NATIVE_CURRENCY,
+} from './tokens'
 
 type ChainTokenList = {
   readonly [chainId: number]: Token[]
@@ -27,6 +36,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     STEVMOS,
     ...WRAPPED_NATIVE_CURRENCIES_ONLY[SupportedChainId.MAINNET],
     USDC_EVMOS,
+    USDT_EVMOS,
+    USDC_NOBLE_EVMOS,
     WETH_EVMOS,
   ],
 }
@@ -45,7 +56,7 @@ export const COMMON_BASES: ChainCurrencyList = {
     STEVMOS,
     nativeOnChain(SupportedChainId.MAINNET),
     STATOM,
-    USDC_EVMOS,
+    USDC_NOBLE_EVMOS,
     USDT_EVMOS,
     WETH_EVMOS,
   ],
