@@ -84,7 +84,7 @@ export const PageTabs = () => {
             <Trans>Assets</Trans>
           </a>
           <MenuItem href="/dashboard" id="dashboard-link" isActive={pathname.startsWith('/dashboard')}>
-            <Trans>Dashboard</Trans>
+            <Trans>Analytics</Trans>
           </MenuItem>
         </>
       )}

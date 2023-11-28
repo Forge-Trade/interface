@@ -14,7 +14,7 @@ function getBlocksPerFetchForChainId(chainId: number | undefined): number {
     case SupportedChainId.OPTIMISM:
       return 15
     case SupportedChainId.MAINNET:
-      return 5
+      return 10
     default:
       return 1
   }

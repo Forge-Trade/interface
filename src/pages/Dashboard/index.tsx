@@ -63,15 +63,11 @@ const EmbedContainer = styled.div`
   flex-direction: column;
   overflow: hidden;
   width: 100%;
-  max-width: 1360px;
-  min-height: 120vh;
-  background-color: ${({ theme }) => theme.backgroundSurface};
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
-    0px 24px 32px rgba(0, 0, 0, 0.01);
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
+  min-height: 110vh;
+  margin: 0 auto;
+  padding 0 8rem;
   border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.backgroundOutline};
 `
 const StyledIframe = styled.iframe`
   border-radius: 12px;
@@ -79,8 +75,9 @@ const StyledIframe = styled.iframe`
   flex-direction: column;
   overflow: hidden;
   width: 100%;
-  min-height: inherit;
+  min-height: 110vh;
   padding: 0;
+  margin: 0 auto;
   right: 0;
   top: 3rem;
   max-width: 1360px;
@@ -112,14 +109,11 @@ const Dashboard = () => {
         <EmbedContainer>
           <StyledIframe
             title="ForgeDashboard"
-            src="https://info.forge.trade/"
+            src="https://analytics.forge.trade/"
             className={embed}
             frameBorder={0}
             height="100%"
             width="100%"
-            sandbox="allow-scripts"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
             seamless
           />
         </EmbedContainer>

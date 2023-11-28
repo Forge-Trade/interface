@@ -25,7 +25,7 @@ function computeAllRoutes(
   currentPath: Pool[] = [],
   allPaths: Route<Currency, Currency>[] = [],
   startCurrencyIn: Currency = currencyIn,
-  maxHops = 2
+  maxHops = 3
 ): Route<Currency, Currency>[] {
   const tokenIn = currencyIn?.wrapped
   const tokenOut = currencyOut?.wrapped
@@ -69,7 +69,7 @@ export function useAllV3Routes(
   return useMemo(() => {
     if (poolsLoading || !chainId || !pools || !currencyIn || !currencyOut) return { loading: true, routes: [] }
 
-    const routes = computeAllRoutes(currencyIn, currencyOut, pools, chainId, [], [], currencyIn, 2)
+    const routes = computeAllRoutes(currencyIn, currencyOut, pools, chainId, [], [], currencyIn, 4)
     return { loading: false, routes }
   }, [chainId, currencyIn, currencyOut, pools, poolsLoading])
 }

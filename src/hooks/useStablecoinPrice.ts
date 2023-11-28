@@ -6,12 +6,12 @@ import { useMemo, useRef } from 'react'
 import { RouterPreference } from 'state/routing/slice'
 import { useRoutingAPITrade } from 'state/routing/useRoutingAPITrade'
 
-import { USDC_EVMOS } from '../constants/tokens'
+import { USDC_NOBLE_EVMOS } from '../constants/tokens'
 
 // Stablecoin amounts used when calculating spot price for a given currency.
 // The amount is large enough to filter low liquidity pairs.
 const STABLECOIN_AMOUNT_OUT: { [chainId: number]: CurrencyAmount<Token> } = {
-  [SupportedChainId.MAINNET]: CurrencyAmount.fromRawAmount(USDC_EVMOS, 1_000e1),
+  [SupportedChainId.MAINNET]: CurrencyAmount.fromRawAmount(USDC_NOBLE_EVMOS, 1_000e1),
 }
 
 /**
