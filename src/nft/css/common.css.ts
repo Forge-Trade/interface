@@ -12,8 +12,8 @@ export const center = sprinkles({
 export const headlineMedium = sprinkles({ fontWeight: 'semibold', fontSize: '28', lineHeight: '36' })
 export const headlineSmall = sprinkles({ fontWeight: 'semibold', fontSize: '20', lineHeight: '28' })
 
-export const subhead = sprinkles({ fontWeight: 'medium', fontSize: '16', lineHeight: '24' })
-export const subheadSmall = sprinkles({ fontWeight: 'medium', fontSize: '14', lineHeight: '14' })
+export const subhead = sprinkles({ fontWeight: 'medium', fontSize: '14', lineHeight: '20' })
+export const subheadSmall = sprinkles({ fontWeight: 'medium', fontSize: '12', lineHeight: '14' })
 
 export const body = sprinkles({ fontWeight: 'normal', fontSize: '16', lineHeight: '24' })
 export const bodySmall = sprinkles({ fontWeight: 'normal', fontSize: '14', lineHeight: '20' })

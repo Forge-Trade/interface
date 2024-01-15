@@ -1,26 +1,15 @@
+/* eslint-disable import/no-unused-modules */
+/* eslint-disable unused-imports/no-unused-imports */
 import { t, Trans } from '@lingui/macro'
-import FeatureFlagModal from 'components/FeatureFlagModal/FeatureFlagModal'
-import { PrivacyPolicyModal } from 'components/PrivacyPolicy'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { Box } from 'nft/components/Box'
 import { Column, Row } from 'nft/components/Flex'
-import {
-  BarChartIcon,
-  DiscordIconMenu,
-  EllipsisIcon,
-  GithubIconMenu,
-  GovernanceIcon,
-  TwitterIconMenu,
-} from 'nft/components/icons'
+import { ChevronDownBagIcon } from 'nft/components/icons'
 import { body, bodySmall } from 'nft/css/common.css'
-import { themeVars } from 'nft/css/sprinkles.css'
 import { ReactNode, useReducer, useRef } from 'react'
 import { NavLink, NavLinkProps } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import { isDevelopmentEnv, isStagingEnv } from 'utils/env'
 
-import { useToggleModal } from '../../state/application/hooks'
-import { ApplicationModal } from '../../state/application/reducer'
 import * as styles from './MenuDropdown.css'
 import { NavDropdown } from './NavDropdown'
 import { NavIcon } from './NavIcon'
@@ -90,100 +79,90 @@ const Separator = () => {
   return <Box className={styles.Separator} />
 }
 
-const IconRow = ({ children }: { children: ReactNode }) => {
-  return <Row className={styles.IconRow}>{children}</Row>
-}
+// const IconRow = ({ children }: { children: ReactNode }) => {
+//   return <Row className={styles.IconRow}>{children}</Row>
+// }
 
-const Icon = ({ href, children }: { href?: string; children: ReactNode }) => {
-  return (
-    <>
-      <Box
-        as={href ? 'a' : 'div'}
-        href={href ?? undefined}
-        target={href ? '_blank' : undefined}
-        rel={href ? 'noopener noreferrer' : undefined}
-        display="flex"
-        flexDirection="column"
-        color="textPrimary"
-        background="none"
-        border="none"
-        justifyContent="center"
-        textAlign="center"
-        marginRight="12"
-      >
-        {children}
-      </Box>
-    </>
-  )
-}
+// const Icon = ({ href, children }: { href?: string; children: ReactNode }) => {
+//   return (
+//     <>
+//       <Box
+//         as={href ? 'a' : 'div'}
+//         href={href ?? undefined}
+//         target={href ? '_blank' : undefined}
+//         rel={href ? 'noopener noreferrer' : undefined}
+//         display="flex"
+//         flexDirection="column"
+//         color="textPrimary"
+//         background="none"
+//         border="none"
+//         justifyContent="center"
+//         textAlign="center"
+//         marginRight="12"
+//         marginLeft="6"
+//       >
+//         {children}
+//       </Box>
+//     </>
+//   )
+// }
 
 export const MenuDropdown = () => {
   const [isOpen, toggleOpen] = useReducer((s) => !s, false)
-  const togglePrivacyPolicy = useToggleModal(ApplicationModal.PRIVACY_POLICY)
-  const openFeatureFlagsModal = useToggleModal(ApplicationModal.FEATURE_FLAGS)
   const ref = useRef<HTMLDivElement>(null)
   useOnClickOutside(ref, isOpen ? toggleOpen : undefined)
 
   return (
     <>
       <Box position="relative" ref={ref}>
-        <NavIcon isActive={isOpen} onClick={toggleOpen} label={isOpen ? t`Show resources` : t`Hide resources`}>
-          <EllipsisIcon viewBox="0 0 20 20" width={24} height={24} />
-        </NavIcon>
-
+        <PrimaryMenuRow>
+          <PrimaryMenuRow.Text>
+            <Trans>🔥 Perps</Trans>
+          </PrimaryMenuRow.Text>
+          <NavIcon isActive={isOpen} onClick={toggleOpen} label={isOpen ? t`Show resources` : t`Hide resources`}>
+            <ChevronDownBagIcon viewBox="0 0 20 20" width={16} height={16} />
+          </NavIcon>
+        </PrimaryMenuRow>
         {isOpen && (
-          <NavDropdown top={{ sm: 'unset', lg: '56' }} bottom={{ sm: '56', lg: 'unset' }} right="0">
+          <NavDropdown top={{ sm: 'unset', lg: '56' }} bottom={{ sm: '56', lg: 'unset' }} left="0">
             <Column gap="16">
-              <Column paddingX="8" gap="4">
-                <PrimaryMenuRow to="/vote" close={toggleOpen}>
-                  <Icon>
-                    <GovernanceIcon width={24} height={24} />
-                  </Icon>
-                  <PrimaryMenuRow.Text>
-                    <Trans>Vote in governance</Trans>
-                  </PrimaryMenuRow.Text>
-                </PrimaryMenuRow>
-                <PrimaryMenuRow href="https://info.uniswap.org/#/">
-                  <Icon>
-                    <BarChartIcon width={24} height={24} />
-                  </Icon>
-                  <PrimaryMenuRow.Text>
-                    <Trans>View more analytics</Trans>
-                  </PrimaryMenuRow.Text>
-                </PrimaryMenuRow>
-              </Column>
-              <Separator />
               <Box
                 display="flex"
                 flexDirection={{ sm: 'row', md: 'column' }}
                 flexWrap="wrap"
                 alignItems={{ sm: 'center', md: 'flex-start' }}
-                paddingX="8"
+                paddingX="20"
+                paddingY="8"
               >
-                <SecondaryLinkedText href="https://help.uniswap.org/en/">
-                  <Trans>Help center</Trans> ↗
+                <SecondaryLinkedText href="https://perps.forge.trade">
+                  <Trans>Forge Perps 🚀</Trans>
+                  <span className="text-xs" style={{ display: 'block', fontSize: 10 }}>
+                    Trade w/ Leverage up to 1000x
+                  </span>
                 </SecondaryLinkedText>
-                <SecondaryLinkedText href="https://docs.uniswap.org/">
-                  <Trans>Documentation</Trans> ↗
+                <Separator />
+                <SecondaryLinkedText href="https://catalyst.forge.trade">
+                  <Trans>Trading Competition 🏆</Trans>
+                  <span className="text-xs" style={{ display: 'block', fontSize: 10 }}>
+                    Catalyst Incentives Ongoing
+                  </span>
                 </SecondaryLinkedText>
-                <SecondaryLinkedText href="https://uniswap.canny.io/feature-requests">
-                  <Trans>Feedback</Trans> ↗
+                <Separator />
+                <SecondaryLinkedText href="https://catalyst.forge.trade/pools">
+                  <Trans>Liquidity Pools 💰</Trans>
+                  <span className="text-xs" style={{ display: 'block', fontSize: 10 }}>
+                    Catalyst Incentives Ongoing
+                  </span>
                 </SecondaryLinkedText>
-                <SecondaryLinkedText
-                  onClick={() => {
-                    toggleOpen()
-                    togglePrivacyPolicy()
-                  }}
-                >
-                  <Trans>Legal & Privacy</Trans> ↗
+                <Separator />
+                <SecondaryLinkedText href="https://catalyst.forge.trade/markets/overview">
+                  <Trans>Market Overview 📈</Trans>
+                  <span className="text-xs" style={{ display: 'block', fontSize: 10 }}>
+                    Perpetual Futures Markets
+                  </span>
                 </SecondaryLinkedText>
-                {(isDevelopmentEnv() || isStagingEnv()) && (
-                  <SecondaryLinkedText onClick={openFeatureFlagsModal}>
-                    <Trans>Feature Flags</Trans>
-                  </SecondaryLinkedText>
-                )}
               </Box>
-              <IconRow>
+              {/* <IconRow>
                 <Icon href="https://discord.com/invite/FCfyBSbCU5">
                   <DiscordIconMenu
                     className={styles.hover}
@@ -208,13 +187,11 @@ export const MenuDropdown = () => {
                     color={themeVars.colors.textSecondary}
                   />
                 </Icon>
-              </IconRow>
+              </IconRow> */}
             </Column>
           </NavDropdown>
         )}
       </Box>
-      <PrivacyPolicyModal />
-      <FeatureFlagModal />
     </>
   )
 }

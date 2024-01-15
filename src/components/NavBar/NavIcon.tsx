@@ -18,8 +18,8 @@ export const NavIcon = ({ children, isActive, label = t`Navigation button`, onCl
       className={styles.navIcon}
       color={isActive ? 'textPrimary' : 'textSecondary'}
       onClick={onClick}
-      height="40"
-      width="40"
+      height="24"
+      width="24"
       aria-label={label}
     >
       {children}

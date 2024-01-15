@@ -14,7 +14,7 @@ export const darkTheme: Theme = {
     violet: vars.color.violet200,
 
     backgroundFloating: '0000000C',
-    backgroundInteractive: vars.color.gray700,
+    backgroundInteractive: vars.color.gray600,
     backgroundModule: vars.color.gray800,
     backgroundOutline: vars.color.backgroundInteractive,
     backgroundSurface: vars.color.gray900,
@@ -30,7 +30,7 @@ export const darkTheme: Theme = {
     textSecondary: vars.color.gray300,
     textTertiary: vars.color.gray500,
 
-    dropShadow: `0px 4px 16px rgba(76, 130, 251, 0.4)`,
+    dropShadow: `0px 4px 16px rgba(13, 14, 14, 0.4)`,
   },
   shadows: {
     menu: '0px 10px 30px rgba(0, 0, 0, 0.1)',

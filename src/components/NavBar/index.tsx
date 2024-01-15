@@ -10,6 +10,7 @@ import { NavLink, NavLinkProps, useLocation, useNavigate } from 'react-router-do
 import styled from 'styled-components/macro'
 
 import { ChainSelector } from './ChainSelector'
+import { MenuDropdown } from './MenuDropdown'
 import * as styles from './style.css'
 
 const Nav = styled.nav`
@@ -52,7 +53,7 @@ export const PageTabs = () => {
     !pathname.startsWith('/pools')
 
   return (
-    <div style={{ display: 'flex', gap: '10px' }}>
+    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
       <MenuItem href="/swap" isActive={pathname.startsWith('/swap')}>
         <Trans>Swap</Trans>
       </MenuItem>
@@ -71,17 +72,6 @@ export const PageTabs = () => {
       >
         <Trans>Perps</Trans>
       </a>
-      {!isMobile && (
-        <a
-          href="https://app.stride.zone/?chain=EVMOS"
-          target="_blank"
-          rel="noopener noreferrer"
-          id="pool-nav-link"
-          className={styles.menuItem}
-        >
-          <Trans>Liquid Stake</Trans>
-        </a>
-      )}
       {!isMobile && (
         <>
           <a
@@ -104,6 +94,7 @@ export const PageTabs = () => {
 const Navbar = () => {
   const isNftPage = useIsNftPage()
   const navigate = useNavigate()
+  const isMobile = useIsMobile()
 
   return (
     <>
@@ -119,7 +110,7 @@ const Navbar = () => {
                   })
                 }}
                 className={styles.logo}
-                style={{ width: '48px', height: '48px' }}
+                style={{ width: '36px', height: '36px' }}
                 src="/images/ForgeIcon.png"
               />
             </Box>
@@ -128,8 +119,9 @@ const Navbar = () => {
                 <ChainSelector leftAlign={true} />
               </Box>
             )}
-            <Row gap={{ xl: '0', xxl: '8' }} display={{ sm: 'none', lg: 'flex' }}>
+            <Row gap={{ xl: '0', xxl: '8' }} display={{ sm: 'none', lg: 'flex' }} alignItems={{ lg: 'center' }}>
               <PageTabs />
+              {!isMobile && <MenuDropdown />}
             </Row>
           </Box>
 
@@ -178,6 +170,7 @@ const Navbar = () => {
                     borderRadius: '0.25rem',
                     marginLeft: '0.8rem',
                     marginTop: '0.15rem',
+                    textDecoration: 'none',
                   }}
                   href="https://revert.finance/#/incentives/evmos"
                   target="_blank"
@@ -199,6 +192,7 @@ const Navbar = () => {
                     borderRadius: '0.25rem',
                     marginLeft: '0.8rem',
                     marginTop: '0.15rem',
+                    textDecoration: 'none',
                   }}
                   href="https://app.steer.finance/"
                   target="_blank"
@@ -220,6 +214,7 @@ const Navbar = () => {
                     borderRadius: '0.25rem',
                     marginLeft: '0.8rem',
                     marginTop: '0.15rem',
+                    textDecoration: 'none',
                   }}
                   href="https://docs.forge.trade/resources/launch"
                   target="_blank"
