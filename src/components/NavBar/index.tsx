@@ -61,17 +61,8 @@ export const PageTabs = () => {
         <Trans>Pools</Trans>
       </MenuItem>
       <MenuItem href="/pool" id="pool-nav-link" isActive={isPoolActive}>
-        <Trans>Manage Positions</Trans>
+        <Trans>Positions</Trans>
       </MenuItem>
-      <a
-        href="https://perps.forge.trade/"
-        target="_blank"
-        rel="noopener noreferrer"
-        id="pool-nav-link"
-        className={styles.menuItem}
-      >
-        <Trans>Perps</Trans>
-      </a>
       {!isMobile && (
         <>
           <a
