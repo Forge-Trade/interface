@@ -66,10 +66,11 @@ export const PageTabs = () => {
       {!isMobile && (
         <>
           <a
-            href="https://assets.forge.trade/"
+            href="https://assets.evmos.org/"
             rel="noopener noreferrer"
             id="pool-nav-link"
             className={styles.menuItem}
+            target="_blank"
           >
             <Trans>Assets</Trans>
           </a>
