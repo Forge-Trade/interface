@@ -67,7 +67,7 @@ const PRICE_PARAMS = {
 export const routingApi = createApi({
   reducerPath: 'routingApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://forge-router.evmosdao.xyz/',
+    baseUrl: 'https://a2skdrejs8.execute-api.eu-north-1.amazonaws.com/prod/',
   }),
   endpoints: (build) => ({
     getQuote: build.query<
