@@ -18,7 +18,6 @@ if (typeof INFURA_KEY === 'undefined') {
 export const FALLBACK_URLS: { [key in SupportedChainId]: string[] } = {
   [SupportedChainId.MAINNET]: [
     // "Safe" URLs
-    'https://jsonrpc-evmos-ia.cosmosia.notional.ventures',
     'https://evmos.lava.build',
     'https://evmos-evm.publicnode.com',
     'https://evmos-rpc.gateway.pokt.network',
@@ -35,7 +34,7 @@ export const FALLBACK_URLS: { [key in SupportedChainId]: string[] } = {
  */
 export const RPC_URLS: { [key in SupportedChainId]: string[] } = {
   [SupportedChainId.MAINNET]: [
-    `https://jsonrpc-evmos-ia.cosmosia.notional.ventures`,
+    `https://evmos.lava.build`,
     ...FALLBACK_URLS[SupportedChainId.MAINNET],
   ],
 
