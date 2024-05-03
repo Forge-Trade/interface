@@ -13,7 +13,7 @@ function formatTokenName(address: string, name: string) {
 }
 
 const fujiClient = new ApolloClient({
-  uri: 'https://subgraph.satsuma-prod.com/09c9cf3574cc/orbital-apes/v3-subgraph/api',
+  uri: 'https://subgraph.satsuma-prod.com/09c9cf3574cc/orbital-apes/forge/api',
   cache: new InMemoryCache({
     typePolicies: {
       Token: {
@@ -60,7 +60,7 @@ function useBlocksFromTimestamps(): {
 
   useEffect(() => {
     async function fetchData() {
-      const results = await fetch('https://subgraph.satsuma-prod.com/09c9cf3574cc/orbital-apes/v3-subgraph/status')
+      const results = await fetch('https://subgraph.satsuma-prod.com/09c9cf3574cc/orbital-apes/forge/api')
       const data = await results.json()
       let latestBlock = data.data.indexingStatusForCurrentVersion.chains[0]?.latestBlock?.number
       console.log(latestBlock)

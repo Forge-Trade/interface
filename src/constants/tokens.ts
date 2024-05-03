@@ -51,9 +51,9 @@ export const STATOM = new Token(
 )
 
 export const EVMOS_STABLE_COINS = [
+  USDC_NOBLE_EVMOS.address.toLowerCase(),
   USDC_EVMOS.address.toLowerCase(),
   USDT_EVMOS.address.toLowerCase(),
-  USDC_NOBLE_EVMOS.address.toLowerCase(),
   '0x4A2a90D444DbB7163B5861b772f882BbA394Ca67'.toLowerCase(),
   '0xe01C6D4987Fc8dCE22988DADa92d56dA701d0Fe0'.toLowerCase(),
   '0xecEEEfCEE421D8062EF8d6b4D814efe4dc898265'.toLowerCase(),
