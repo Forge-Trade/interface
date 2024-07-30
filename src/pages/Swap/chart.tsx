@@ -28,7 +28,7 @@ const TOKEN_PRICE = (tokenId = '') => {
 }
 
 const fujiClient = new ApolloClient({
-  uri: 'https://subgraph.satsuma-prod.com/09c9cf3574cc/orbital-apes/forge/api',
+  uri: 'https://subgraph.evmos.org/subgraphs/name/forge-subgraph',
   cache: new InMemoryCache({
     typePolicies: {
       Token: {

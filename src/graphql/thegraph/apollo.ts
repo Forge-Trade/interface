@@ -4,7 +4,7 @@ import { SupportedChainId } from 'constants/chains'
 import store from '../../state/index'
 
 const CHAIN_SUBGRAPH_URL: Record<number, string> = {
-  [SupportedChainId.MAINNET]: 'https://subgraph.satsuma-prod.com/09c9cf3574cc/orbital-apes/forge/api',
+  [SupportedChainId.MAINNET]: 'https://subgraph.evmos.org/subgraphs/name/forge-subgraph',
 }
 
 const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[SupportedChainId.MAINNET] })
