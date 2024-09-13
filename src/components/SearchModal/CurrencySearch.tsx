@@ -127,26 +127,11 @@ export function CurrencySearch({
   const wrapped = native.wrapped
 
   const searchCurrencies: Currency[] = useMemo(() => {
-    const s = debouncedQuery.toLowerCase().trim()
-
     const tokens = filteredSortedTokens.filter((t) => !(t.equals(wrapped) || (disableNonToken && t.isNative)))
-    const shouldShowWrapped =
-      !onlyShowCurrenciesWithBalance || (!balancesAreLoading && balances[wrapped.address]?.greaterThan(0))
-    const natives = (
-      disableNonToken || native.equals(wrapped) ? [wrapped] : shouldShowWrapped ? [native, wrapped] : [native]
-    ).filter((n) => n.symbol?.toLowerCase()?.indexOf(s) !== -1 || n.name?.toLowerCase()?.indexOf(s) !== -1)
+    const natives = [wrapped]
 
     return [...natives, ...tokens]
-  }, [
-    debouncedQuery,
-    filteredSortedTokens,
-    onlyShowCurrenciesWithBalance,
-    balancesAreLoading,
-    balances,
-    wrapped,
-    disableNonToken,
-    native,
-  ])
+  }, [filteredSortedTokens, wrapped, disableNonToken])
 
   const handleCurrencySelect = useCallback(
     (currency: Currency, hasWarning?: boolean) => {

@@ -148,72 +148,38 @@ const Navbar = () => {
                   color: 'black',
                 }}
               >
-                Inferno Incentives - Earn EVMOS, Earn STRD{' '}
+                Try liquidy management with{' '}
                 <a
                   style={{
                     display: 'inline-block',
-                    color: 'rgb(250, 241, 228)',
+                    color: 'rgb(237, 78, 51)',
                     fontWeight: 600,
-                    paddingTop: '0.375rem',
-                    paddingBottom: '0.375rem',
-                    paddingRight: '1.25rem',
-                    paddingLeft: '1.25rem',
-                    backgroundColor: 'rgb(237, 78, 51)',
                     borderRadius: '0.25rem',
-                    marginLeft: '0.8rem',
                     marginTop: '0.15rem',
                     textDecoration: 'none',
                   }}
-                  href="https://revert.finance/#/incentives/evmos"
+                  href="https://revert.finance/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="infoBtn rounded bg-red p-5 py-1.5 my-1 font-semibold text-pearl"
                 >
-                  Check Revert Incentives 🔥
+                  Revert
                 </a>
+                {' and '}
                 <a
                   style={{
                     display: 'inline-block',
-                    color: 'rgb(250, 241, 228)',
+                    color: 'rgb(237, 78, 51)',
                     fontWeight: 600,
-                    paddingTop: '0.375rem',
-                    paddingBottom: '0.375rem',
-                    paddingRight: '1.25rem',
-                    paddingLeft: '1.25rem',
-                    backgroundColor: 'rgb(237, 78, 51)',
-                    borderRadius: '0.25rem',
-                    marginLeft: '0.8rem',
                     marginTop: '0.15rem',
                     textDecoration: 'none',
                   }}
                   href="https://app.steer.finance/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="infoBtn rounded bg-red p-5 py-1.5 my-1 font-semibold text-pearl"
+                  className="infoBtn  font-semibold text-pearl"
                 >
-                  Check Steer Incentives ⚡️
-                </a>
-                <a
-                  style={{
-                    display: 'inline-block',
-                    color: 'rgb(250, 241, 228)',
-                    fontWeight: 600,
-                    paddingTop: '0.375rem',
-                    paddingBottom: '0.375rem',
-                    paddingRight: '1.25rem',
-                    paddingLeft: '1.25rem',
-                    backgroundColor: 'rgb(79, 71, 64)',
-                    borderRadius: '0.25rem',
-                    marginLeft: '0.8rem',
-                    marginTop: '0.15rem',
-                    textDecoration: 'none',
-                  }}
-                  href="https://docs.forge.trade/resources/launch"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="infoBtn learnBtn rounded bg-red p-5 py-1.5 font-semibold text-pearl"
-                >
-                  Learn More 🌋
+                  Steer
                 </a>
               </div>
             </>
